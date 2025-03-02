@@ -10,11 +10,18 @@ This README provides a step-by-step guide to set up unit testing with Google Tes
 
 ## Getting Started
 
+### 0. Install tools
+
+```bash
+sudo apt-get install cmake g++ lcov
+```
+
+
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/your-project.git
-cd your-project
+git clone https://github.com/makepluscode/unit-test-code-coverage-example.git
+cd unit-test-code-coverage-example
 ```
 
 ### 2. Build the Project
@@ -62,7 +69,7 @@ lcov --zerocounters --directory .
 
 ```bash
 # Capture coverage information
-lcov --capture --directory . --output-file coverage_raw.info --rc lcov_branch_coverage=1 --ignore-errors inconsistent,unsupported
+lcov --capture --directory . --output-file coverage_raw.info --rc lcov_branch_coverage=1 --ignore-errors inconsistent,unsupported,mismatch
 ```
 
 ### 4. Filter Out External Code
@@ -70,7 +77,7 @@ lcov --capture --directory . --output-file coverage_raw.info --rc lcov_branch_co
 Remove system libraries and Google Test code from the coverage report:
 
 ```bash
-lcov --remove coverage_raw.info '/usr/*' '*/_deps/*' '*/googletest/*' -o coverage.info
+lcov --remove coverage_raw.info '/usr/*' '*/_deps/*' -o coverage.info 
 ```
 
 ### 5. Generate HTML Report
@@ -84,8 +91,6 @@ genhtml coverage.info --output-directory coverage_report
 Open the HTML report in your browser:
 
 ```bash
-# On macOS
-open coverage_report/index.html
 
 # On Linux
 xdg-open coverage_report/index.html
